@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dhanil's Portfolio | Cashflow Tracker</title>
+    <title>Dhanil's Portfolio | Cashflow Ultimate</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -70,7 +70,7 @@
                         <i class="fa-solid fa-chart-pie"></i>
                     </div>
                     <div>
-                        <span class="font-bold text-xl tracking-tight text-white block leading-none">Cashflow<span class="text-blue-500">Pro</span></span>
+                        <span class="font-bold text-xl tracking-tight text-white block leading-none">Cashflow<span class="text-blue-500">Ultimate</span></span>
                         <span class="text-[10px] text-gray-400 uppercase tracking-widest">Portfolio Tracker</span>
                     </div>
                 </div>
@@ -92,17 +92,25 @@
                     </h3>
                 </div>
                 
-                <div class="space-y-5">
+                <div class="space-y-4">
                     <div>
                         <label class="block text-xs font-bold text-gray-400 mb-1 uppercase tracking-wide">Mulai Tanggal</label>
-                        <input type="date" id="inputStartDate" class="input-field w-full px-4 py-3 rounded-xl font-semibold cursor-pointer">
+                        <input type="date" id="inputStartDate" class="input-field w-full px-4 py-2.5 rounded-xl font-semibold cursor-pointer">
                     </div>
 
                     <div>
                         <label class="block text-xs font-bold text-gray-400 mb-1 uppercase tracking-wide">Saldo Awal (Rp)</label>
                         <div class="relative">
-                            <span class="absolute left-4 top-3.5 text-gray-500 font-bold">Rp</span>
-                            <input type="number" id="inputBalance" class="input-field w-full pl-12 pr-4 py-3 rounded-xl text-xl font-bold text-white placeholder-gray-600" placeholder="0">
+                            <span class="absolute left-4 top-3 text-gray-500 font-bold">Rp</span>
+                            <input type="number" id="inputBalance" class="input-field w-full pl-12 pr-4 py-2.5 rounded-xl text-lg font-bold text-white placeholder-gray-600" placeholder="0">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-yellow-500 mb-1 uppercase tracking-wide">Target Goal (Rp)</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-3 text-gray-500 font-bold">Rp</span>
+                            <input type="number" id="inputTarget" class="input-field w-full pl-12 pr-4 py-2.5 rounded-xl text-lg font-bold text-yellow-400 placeholder-gray-600" value="200000000">
                         </div>
                     </div>
 
@@ -110,20 +118,20 @@
                         <div>
                             <label class="block text-xs font-bold text-gray-400 mb-1 uppercase tracking-wide">Profit Harian</label>
                             <div class="relative">
-                                <input type="number" id="inputReturn" class="input-field w-full pl-4 pr-8 py-3 rounded-xl font-bold text-green-400" value="5">
-                                <span class="absolute right-4 top-3.5 text-gray-500 font-bold">%</span>
+                                <input type="number" id="inputReturn" class="input-field w-full pl-4 pr-8 py-2.5 rounded-xl font-bold text-green-400" value="5">
+                                <span class="absolute right-4 top-2.5 text-gray-500 font-bold">%</span>
                             </div>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-400 mb-1 uppercase tracking-wide">WD / Bulan</label>
                             <div class="relative">
-                                <input type="number" id="inputWD" class="input-field w-full pl-4 pr-12 py-3 rounded-xl font-bold text-red-400" value="5">
-                                <span class="absolute right-4 top-3.5 text-gray-500 text-xs font-bold">Juta</span>
+                                <input type="number" id="inputWD" class="input-field w-full pl-4 pr-12 py-2.5 rounded-xl font-bold text-red-400" value="5">
+                                <span class="absolute right-4 top-2.5 text-gray-500 text-xs font-bold">Juta</span>
                             </div>
                         </div>
                     </div>
 
-                    <button onclick="calculate()" class="w-full group relative overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg transform transition hover:scale-[1.02] active:scale-95 mt-4">
+                    <button onclick="calculate()" class="w-full group relative overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-3 rounded-xl shadow-lg transform transition hover:scale-[1.02] active:scale-95 mt-2">
                         <div class="absolute inset-0 w-full h-full bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -translate-x-full skew-x-12"></div>
                         <span class="relative flex items-center justify-center gap-2">
                             <i class="fa-solid fa-calculator"></i> Kalkulasi Cashflow
@@ -167,7 +175,7 @@
                     <h3 class="text-lg font-bold text-white flex items-center gap-2">
                         <i class="fa-solid fa-money-bill-transfer text-green-500"></i> Laporan Arus Kas Harian
                     </h3>
-                    <p class="text-xs text-gray-400 mt-1">Detail pergerakan saldo, profit, dan penarikan dana.</p>
+                    <p class="text-xs text-gray-400 mt-1">Detail pergerakan saldo awal, profit, withdrawal, dan saldo akhir.</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="text-[10px] font-bold uppercase bg-gray-900 text-gray-500 px-3 py-1.5 rounded-lg border border-gray-700">
@@ -185,6 +193,7 @@
                         <tr class="text-gray-400 text-xs uppercase tracking-wider">
                             <th class="px-6 py-4 font-bold border-b border-gray-700">Hari</th>
                             <th class="px-6 py-4 font-bold border-b border-gray-700">Tanggal</th>
+                            <th class="px-6 py-4 font-bold border-b border-gray-700 text-right text-gray-300">Saldo Awal</th>
                             <th class="px-6 py-4 font-bold border-b border-gray-700 text-right text-green-500">Profit (+Rp)</th>
                             <th class="px-6 py-4 font-bold border-b border-gray-700 text-right text-red-500">Withdrawal (-Rp)</th>
                             <th class="px-6 py-4 font-bold border-b border-gray-700 text-right text-blue-500">Saldo Akhir (=Rp)</th>
@@ -207,26 +216,14 @@
     </footer>
 
     <script>
-        // CONFIG
-        const TARGET_AMOUNT = 200000000;
+        // CONFIG GLOBAL
+        let TARGET_AMOUNT = 200000000; // Default, will be updated from input
         
         // LIBUR NASIONAL & CUTI BERSAMA 2026 (Database)
-        // Format: YYYY-MM-DD
         const holidays2026 = [
-            "2025-12-31", // Libur Bursa Akhir Tahun
-            "2026-01-01", // Tahun Baru
-            "2026-01-16", // Isra Mikraj
-            "2026-02-16", // Cuti Bersama Imlek
-            "2026-02-17", // Imlek 2577
-            "2026-03-03", // Nyepi (Estimasi) - Diabaikan krn tertutup libur panjang Maret
-            // LIBUR PANJANG MARET (Nyepi + Idul Fitri)
-            "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-23", "2026-03-24", "2026-03-25",
-            "2026-03-31", // Lebaran Extra (Safety)
-            "2026-04-03", // Wafat Isa Almasih
-            "2026-05-01", // Hari Buruh
-            "2026-05-14", // Kenaikan Isa Almasih
-            "2026-05-25", // Cuti Waisak (Estimasi)
-            "2026-06-01"  // Pancasila
+            "2025-12-31", "2026-01-01", "2026-01-16", "2026-02-16", "2026-02-17",
+            "2026-03-03", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-23", "2026-03-24", "2026-03-25",
+            "2026-03-31", "2026-04-03", "2026-05-01", "2026-05-14", "2026-05-25", "2026-06-01"
         ];
 
         let chartInstance = null;
@@ -235,21 +232,16 @@
         const formatIDR = (num) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
         const formatDate = (date) => date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
         
-        // Fungsi Cek Hari Trading (Senin-Jumat + Skip Libur)
         function isTradingDay(date) {
             const day = date.getDay();
-            if (day === 0 || day === 6) return false; // Weekend
-            
-            // Konversi date ke YYYY-MM-DD Local Time
+            if (day === 0 || day === 6) return false; 
             const offset = date.getTimezoneOffset();
             const localDate = new Date(date.getTime() - (offset*60*1000));
             const dateStr = localDate.toISOString().split('T')[0];
-            
             if (holidays2026.includes(dateStr)) return false;
             return true;
         }
 
-        // Fungsi Cari Hari Trading Berikutnya (Look Ahead)
         function getNextTradingDay(fromDate) {
             let nextDate = new Date(fromDate);
             nextDate.setDate(nextDate.getDate() + 1);
@@ -266,14 +258,16 @@
             const dailyReturn = (parseFloat(document.getElementById('inputReturn').value) || 0) / 100;
             const monthlyWD = (parseFloat(document.getElementById('inputWD').value) || 0) * 1000000;
             const startDateInput = document.getElementById('inputStartDate').value;
+            
+            // NEW: Get Target from Input
+            TARGET_AMOUNT = parseFloat(document.getElementById('inputTarget').value) || 200000000;
 
             // 2. Setup Tanggal Mulai
             let currentDate = new Date(startDateInput);
             if (isNaN(currentDate.getTime())) {
-                currentDate = new Date(); // Default hari ini
-                currentDate.setDate(currentDate.getDate() + 1); // Start besok
+                currentDate = new Date();
+                currentDate.setDate(currentDate.getDate() + 1);
             }
-            // Geser ke hari trading valid pertama jika start date adalah libur
             while (!isTradingDay(currentDate)) {
                  currentDate.setDate(currentDate.getDate() + 1);
             }
@@ -283,6 +277,7 @@
             localStorage.setItem('d_return', document.getElementById('inputReturn').value);
             localStorage.setItem('d_wd', document.getElementById('inputWD').value);
             localStorage.setItem('d_start', startDateInput);
+            localStorage.setItem('d_target', TARGET_AMOUNT); // Save Target
 
             // 4. Init Variabel Loop
             let daysCount = 0;
@@ -294,16 +289,18 @@
 
             const tableBody = document.getElementById('tableBody');
             
-            // LOOP UTAMA (Per Hari)
-            while (balance < TARGET_AMOUNT && safetyBreak < 700) { // Max 700 hari (2 tahun) safety
+            // LOOP UTAMA
+            while (balance < TARGET_AMOUNT && safetyBreak < 700) { 
                 daysCount++;
 
-                // A. Hitung Profit Harian
-                let prevBalance = balance;
-                let profit = balance * dailyReturn;
-                let balanceAfterProfit = prevBalance + profit;
+                // A. Capture Saldo Awal Hari Ini (Sebelum Profit)
+                let startBalance = balance;
 
-                // B. Cek Logic Withdrawal (Apakah besok sudah ganti bulan?)
+                // B. Hitung Profit
+                let profit = startBalance * dailyReturn;
+                let balanceBeforeWD = startBalance + profit;
+
+                // C. Cek Logic Withdrawal
                 let nextTradingDay = getNextTradingDay(currentDate);
                 let isLastDayOfMonth = nextTradingDay.getMonth() !== currentDate.getMonth();
                 
@@ -316,14 +313,13 @@
                     totalWD += wdAmount;
                 }
 
-                // C. Hitung Saldo Akhir Hari Ini
-                balance = balanceAfterProfit - wdAmount;
+                // D. Hitung Saldo Akhir (Yang dibawa ke besok)
+                balance = balanceBeforeWD - wdAmount; // Update variable 'balance' untuk loop selanjutnya
 
-                // D. Generate Tampilan Tabel
+                // E. Render Tabel
                 const dateString = formatDate(currentDate);
                 const dayName = currentDate.toLocaleDateString('id-ID', { weekday: 'long' });
 
-                // Styling Baris
                 let rowClass = "hover:bg-gray-800/40 transition border-b border-gray-800";
                 let statusBadge = '<span class="text-[10px] font-bold bg-gray-800 text-gray-400 px-2 py-1 rounded border border-gray-700">ON TRACK</span>';
                 let wdText = "-";
@@ -348,45 +344,36 @@
                             <div class="text-white font-bold text-sm">${dateString}</div>
                             <div class="text-xs text-gray-500 font-medium">${dayName}</div>
                         </td>
+                        <td class="px-6 py-4 text-right font-mono text-gray-400 font-medium">${formatIDR(startBalance)}</td>
                         <td class="px-6 py-4 text-right font-mono text-green-400 font-medium">+${formatIDR(profit)}</td>
                         <td class="px-6 py-4 text-right font-mono ${wdClass}">${wdText}</td>
-                        <td class="px-6 py-4 text-right font-mono text-white font-bold text-base tracking-wide">${formatIDR(balance)}</td>
+                        <td class="px-6 py-4 text-right font-mono text-blue-400 font-bold text-base tracking-wide">${formatIDR(balance)}</td>
                         <td class="px-6 py-4 text-center">${statusBadge}</td>
                     </tr>
                 `;
 
-                // E. Simpan Data Chart
+                // F. Chart Data (Use End Balance)
                 chartLabels.push(`Hari ${daysCount}`);
                 chartData.push(balance);
 
-                // F. Pindah ke Hari Berikutnya
-                currentDate = nextTradingDay; // Langsung lompat ke hari trading valid berikutnya
+                // G. Next Day
+                currentDate = nextTradingDay;
                 safetyBreak++;
             }
 
-            // 5. Update DOM Sekaligus
+            // Update DOM
             tableBody.innerHTML = tableHTML;
-
-            // Summary Info
             document.getElementById('resDays').innerText = daysCount;
             document.getElementById('resTotalWD').innerText = formatIDR(totalWD);
             
-            // Hitung Tanggal Finish (Mundur 1 step karena loop sudah majuin tanggal di akhir)
-            // Sebenarnya currentDate sekarang adalah hari SETELAH target tercapai.
-            // Kita perlu cari hari trading sebelumnya.
             let finishDate = new Date(currentDate);
-            // Mundur cari hari trading terakhir
             do {
                 finishDate.setDate(finishDate.getDate() - 1);
             } while (!isTradingDay(finishDate));
             
-            // Khusus: Jika loop berhenti tepat saat target tercapai, finishDate harusnya hari terakhir di loop
-            // Logika getNextTradingDay di akhir loop sudah memajukan tanggal. Jadi mundur sekali sudah benar.
-
             document.getElementById('resFinishDate').innerText = formatDate(finishDate);
             document.getElementById('resFinishDay').innerText = finishDate.toLocaleDateString('id-ID', { weekday: 'long' });
 
-            // Render Chart
             renderChart(chartLabels, chartData);
         }
 
@@ -415,9 +402,9 @@
                         tension: 0.3
                     },
                     {
-                        label: 'Target 200 Juta',
+                        label: `Target ${formatIDR(TARGET_AMOUNT)}`,
                         data: Array(labels.length).fill(TARGET_AMOUNT),
-                        borderColor: '#10b981',
+                        borderColor: '#eab308', // Yellow for Target
                         borderWidth: 2,
                         borderDash: [5, 5],
                         pointRadius: 0,
@@ -464,18 +451,15 @@
 
         // --- INIT ---
         window.onload = function() {
-            // Set Header Date
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('todayDate').innerText = new Date().toLocaleDateString('id-ID', options);
 
-            // Default Start Date = Besok
             let tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + 1);
             const offset = tomorrow.getTimezoneOffset();
             const localTomorrow = new Date(tomorrow.getTime() - (offset*60*1000));
             const tomorrowStr = localTomorrow.toISOString().split('T')[0];
 
-            // Load Saved Data
             if(localStorage.getItem('d_balance')) document.getElementById('inputBalance').value = localStorage.getItem('d_balance');
             else document.getElementById('inputBalance').value = "7000000"; 
             
@@ -485,7 +469,9 @@
             if(localStorage.getItem('d_start')) document.getElementById('inputStartDate').value = localStorage.getItem('d_start');
             else document.getElementById('inputStartDate').value = tomorrowStr;
 
-            // Run First Calc
+            // Load Saved Target
+            if(localStorage.getItem('d_target')) document.getElementById('inputTarget').value = localStorage.getItem('d_target');
+
             calculate();
         };
     </script>
