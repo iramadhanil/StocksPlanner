@@ -167,21 +167,20 @@
         <div class="glass-panel rounded-2xl overflow-hidden shadow-2xl">
             <div class="p-6 border-b border-gray-700 flex justify-between items-center">
                 <h3 class="text-lg font-semibold text-white">
-                    <i class="fa-solid fa-list-ul text-blue-500 mr-2"></i> Roadmap Harian
+                    <i class="fa-solid fa-list-ul text-blue-500 mr-2"></i> Roadmap Harian (Day-by-Day)
                 </h3>
                 <span class="text-xs text-gray-400 bg-gray-800 px-3 py-1 rounded-full border border-gray-700">
-                    <i class="fa-solid fa-info-circle mr-1"></i> Auto-skip Libur BEI
+                    <i class="fa-solid fa-check-circle mr-1"></i> Full Detail
                 </span>
             </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-gray-800/50 text-gray-400 text-xs uppercase tracking-wider">
-                            <th class="px-6 py-4 font-semibold">Hari Ke</th>
-                            <th class="px-6 py-4 font-semibold">Tanggal</th>
-                            <th class="px-6 py-4 font-semibold text-right">Target Saldo</th>
-                            <th class="px-6 py-4 font-semibold text-right">Profit Harian</th>
-                            <th class="px-6 py-4 font-semibold text-center">Status</th>
+            <div class="overflow-x-auto max-h-[800px] overflow-y-auto"> <table class="w-full text-left border-collapse relative">
+                    <thead class="sticky top-0 z-10">
+                        <tr class="bg-gray-800 text-gray-400 text-xs uppercase tracking-wider shadow-md">
+                            <th class="px-6 py-4 font-semibold bg-gray-900">Hari Ke</th>
+                            <th class="px-6 py-4 font-semibold bg-gray-900">Tanggal</th>
+                            <th class="px-6 py-4 font-semibold text-right bg-gray-900">Target Saldo</th>
+                            <th class="px-6 py-4 font-semibold text-right bg-gray-900">Profit Harian</th>
+                            <th class="px-6 py-4 font-semibold text-center bg-gray-900">Status</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody" class="text-sm divide-y divide-gray-800 text-gray-300">
@@ -260,8 +259,8 @@
             let initialBalance = balance;
             
             const tableBody = document.getElementById('tableBody');
-            tableBody.innerHTML = ''; // Clear table
-
+            let tableHTML = ""; // Gunakan string builder untuk performa
+            
             // Loop Logic
             let safetyBreak = 0;
             
@@ -282,43 +281,40 @@
                 let nextDay = new Date(currentDate);
                 nextDay.setDate(nextDay.getDate() + 1);
                 
+                // Cek ganti bulan (Cek hari bursa berikutnya, jika bulan beda, berarti ini hari terakhir bulan ini)
                 if (nextDay.getMonth() !== currentDate.getMonth()) {
                      balance -= monthlyWD;
                      isWDMoment = true;
                 }
 
-                // Render Table Row
+                // Render Table Row (TANPA SKIP - MENAMPILKAN SEMUA HARI)
                 const dateString = formatDate(currentDate);
                 const dayName = currentDate.toLocaleDateString('id-ID', { weekday: 'long' });
 
-                // Render condition: First 10 days, Target reached, WD moment, or every 5 days
-                if (daysCount <= 10 || balance >= TARGET_AMOUNT || isWDMoment || daysCount % 5 === 0) {
-                    let statusBadge = '<span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">On Track</span>';
-                    let rowClass = "hover:bg-gray-800/50 transition";
-                    
-                    if (isWDMoment) {
-                        statusBadge = '<span class="text-xs bg-red-900 text-red-200 px-2 py-1 rounded border border-red-700">Withdrawal</span>';
-                        rowClass = "bg-red-900/10 hover:bg-red-900/20";
-                    }
-                    if (balance >= TARGET_AMOUNT) {
-                        statusBadge = '<span class="text-xs bg-green-900 text-green-200 px-2 py-1 rounded border border-green-700">TARGET!</span>';
-                        rowClass = "bg-green-900/20 font-bold";
-                    }
-
-                    const row = `
-                        <tr class="${rowClass}">
-                            <td class="px-6 py-4">${daysCount}</td>
-                            <td class="px-6 py-4">
-                                <div class="text-white font-medium">${dateString}</div>
-                                <div class="text-xs text-gray-500">${dayName}</div>
-                            </td>
-                            <td class="px-6 py-4 text-right font-mono text-white">${formatIDR(balance)}</td>
-                            <td class="px-6 py-4 text-right font-mono text-green-400">+${formatIDR(profit)}</td>
-                            <td class="px-6 py-4 text-center">${statusBadge}</td>
-                        </tr>
-                    `;
-                    tableBody.innerHTML += row;
+                let statusBadge = '<span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">On Track</span>';
+                let rowClass = "hover:bg-gray-800/50 transition";
+                
+                if (isWDMoment) {
+                    statusBadge = '<span class="text-xs bg-red-900 text-red-200 px-2 py-1 rounded border border-red-700">Withdrawal</span>';
+                    rowClass = "bg-red-900/10 hover:bg-red-900/20";
                 }
+                if (balance >= TARGET_AMOUNT) {
+                    statusBadge = '<span class="text-xs bg-green-900 text-green-200 px-2 py-1 rounded border border-green-700">TARGET!</span>';
+                    rowClass = "bg-green-900/20 font-bold";
+                }
+
+                tableHTML += `
+                    <tr class="${rowClass}">
+                        <td class="px-6 py-4 font-mono text-gray-400">${daysCount}</td>
+                        <td class="px-6 py-4">
+                            <div class="text-white font-medium">${dateString}</div>
+                            <div class="text-xs text-gray-500">${dayName}</div>
+                        </td>
+                        <td class="px-6 py-4 text-right font-mono text-white">${formatIDR(balance)}</td>
+                        <td class="px-6 py-4 text-right font-mono text-green-400">+${formatIDR(profit)}</td>
+                        <td class="px-6 py-4 text-center">${statusBadge}</td>
+                    </tr>
+                `;
 
                 // Chart Data
                 chartLabels.push(`Hari ${daysCount}`);
@@ -326,7 +322,7 @@
 
                 // Increment Date for Next Loop
                 currentDate.setDate(currentDate.getDate() + 1);
-                // Skip Holidays inside loop
+                // Skip Holidays inside loop (Loop tanggal kalender sampai ketemu hari bursa)
                 while (!isTradingDay(currentDate)) {
                     currentDate.setDate(currentDate.getDate() + 1);
                 }
@@ -334,14 +330,15 @@
                 safetyBreak++;
             }
 
+            // Insert Table HTML sekaligus
+            tableBody.innerHTML = tableHTML;
+
             // Update Summary
             document.getElementById('resDays').innerText = daysCount;
             
-            // Logic to find Finish Date (Previous logic corrected)
-            // Because loop increments date at the end, the 'finish date' is actually the previous valid trading day
-            // But we already skipped holidays. So we need to step back to the last valid trading day.
+            // Find Finish Date
             let finishDate = new Date(currentDate);
-            // Step back loop to find last trading day
+            // Step back to previous valid trading day
             do {
                 finishDate.setDate(finishDate.getDate() - 1);
             } while (!isTradingDay(finishDate));
@@ -414,13 +411,13 @@
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('todayDate').innerText = new Date().toLocaleDateString('id-ID', options);
 
-            // Set Default "Tomorrow" for Start Date if empty
+            // Default Start Date = Tomorrow
             let tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + 1);
-            let yyyy = tomorrow.getFullYear();
-            let mm = String(tomorrow.getMonth() + 1).padStart(2, '0');
-            let dd = String(tomorrow.getDate()).padStart(2, '0');
-            let tomorrowStr = `${yyyy}-${mm}-${dd}`;
+            // Format YYYY-MM-DD manually for local time accuracy
+            const offset = tomorrow.getTimezoneOffset();
+            tomorrow = new Date(tomorrow.getTime() - (offset*60*1000));
+            const tomorrowStr = tomorrow.toISOString().split('T')[0];
 
             // Load LocalStorage
             if(localStorage.getItem('dhanil_balance')) document.getElementById('inputBalance').value = localStorage.getItem('dhanil_balance');
