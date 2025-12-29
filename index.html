@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dhanil's Portfolio Tracker | Road to 200M</title>
+    <title>Dhanil's Portfolio | Cashflow Tracker</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -18,6 +18,7 @@
                     colors: {
                         primary: '#3b82f6',
                         secondary: '#10b981',
+                        danger: '#ef4444',
                         darkbg: '#0f172a',
                         cardbg: '#1e293b'
                     }
@@ -53,7 +54,6 @@
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #475569; }
         
-        /* Date Picker Icon Color Fix */
         ::-webkit-calendar-picker-indicator {
             filter: invert(1);
             cursor: pointer;
@@ -67,12 +67,15 @@
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center gap-3">
                     <div class="bg-blue-600 p-2 rounded-lg text-white">
-                        <i class="fa-solid fa-chart-line"></i>
+                        <i class="fa-solid fa-chart-pie"></i>
                     </div>
-                    <span class="font-bold text-xl tracking-tight text-white">Profit<span class="text-blue-500">Tracker</span></span>
+                    <div>
+                        <span class="font-bold text-xl tracking-tight text-white block leading-none">Cashflow<span class="text-blue-500">Pro</span></span>
+                        <span class="text-[10px] text-gray-400 uppercase tracking-widest">Portfolio Tracker</span>
+                    </div>
                 </div>
-                <div class="text-sm text-gray-400 hidden sm:block">
-                    <i class="fa-regular fa-calendar mr-2"></i> <span id="todayDate"></span>
+                <div class="text-sm text-gray-400 hidden sm:block bg-gray-800 px-3 py-1 rounded-full border border-gray-700">
+                    <i class="fa-regular fa-calendar mr-2 text-blue-400"></i> <span id="todayDate"></span>
                 </div>
             </div>
         </div>
@@ -82,105 +85,110 @@
         
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
             
-            <div class="lg:col-span-4 glass-panel rounded-2xl p-6 shadow-xl">
-                <h3 class="text-lg font-semibold text-white mb-5 flex items-center gap-2">
-                    <i class="fa-solid fa-sliders text-blue-500"></i> Konfigurasi
-                </h3>
+            <div class="lg:col-span-4 glass-panel rounded-2xl p-6 shadow-xl h-fit">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-blue-500"></i> Parameter Trading
+                    </h3>
+                </div>
                 
-                <div class="space-y-4">
+                <div class="space-y-5">
                     <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1 uppercase">Mulai Tanggal</label>
-                        <input type="date" id="inputStartDate" class="input-field w-full px-4 py-2.5 rounded-lg font-semibold cursor-pointer">
+                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase tracking-wide">Mulai Tanggal</label>
+                        <input type="date" id="inputStartDate" class="input-field w-full px-4 py-3 rounded-xl font-semibold cursor-pointer">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1 uppercase">Saldo Awal (Rp)</label>
+                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase tracking-wide">Saldo Awal (Rp)</label>
                         <div class="relative">
-                            <span class="absolute left-3 top-3 text-gray-500">Rp</span>
-                            <input type="number" id="inputBalance" class="input-field w-full pl-10 pr-4 py-2.5 rounded-lg text-lg font-bold" placeholder="0">
+                            <span class="absolute left-4 top-3.5 text-gray-500 font-bold">Rp</span>
+                            <input type="number" id="inputBalance" class="input-field w-full pl-12 pr-4 py-3 rounded-xl text-xl font-bold text-white placeholder-gray-600" placeholder="0">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-medium text-gray-400 mb-1 uppercase">Return Harian (%)</label>
-                            <input type="number" id="inputReturn" class="input-field w-full px-4 py-2.5 rounded-lg font-semibold" value="5">
+                            <label class="block text-xs font-bold text-gray-400 mb-1 uppercase tracking-wide">Profit Harian</label>
+                            <div class="relative">
+                                <input type="number" id="inputReturn" class="input-field w-full pl-4 pr-8 py-3 rounded-xl font-bold text-green-400" value="5">
+                                <span class="absolute right-4 top-3.5 text-gray-500 font-bold">%</span>
+                            </div>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-gray-400 mb-1 uppercase">WD Bulanan (Juta)</label>
-                            <input type="number" id="inputWD" class="input-field w-full px-4 py-2.5 rounded-lg font-semibold" value="5">
+                            <label class="block text-xs font-bold text-gray-400 mb-1 uppercase tracking-wide">WD / Bulan</label>
+                            <div class="relative">
+                                <input type="number" id="inputWD" class="input-field w-full pl-4 pr-12 py-3 rounded-xl font-bold text-red-400" value="5">
+                                <span class="absolute right-4 top-3.5 text-gray-500 text-xs font-bold">Juta</span>
+                            </div>
                         </div>
                     </div>
 
-                    <button onclick="calculate()" class="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-bold py-3 rounded-xl shadow-lg transform transition hover:scale-[1.02] active:scale-95 mt-2">
-                        <i class="fa-solid fa-rotate mr-2"></i> Hitung Proyeksi
+                    <button onclick="calculate()" class="w-full group relative overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg transform transition hover:scale-[1.02] active:scale-95 mt-4">
+                        <div class="absolute inset-0 w-full h-full bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -translate-x-full skew-x-12"></div>
+                        <span class="relative flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-calculator"></i> Kalkulasi Cashflow
+                        </span>
                     </button>
                 </div>
             </div>
 
-            <div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="glass-panel rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition">
-                        <i class="fa-solid fa-flag-checkered text-6xl text-white"></i>
+            <div class="lg:col-span-8 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="glass-panel rounded-2xl p-5 border-l-4 border-blue-500 relative overflow-hidden">
+                        <div class="text-xs text-gray-400 font-bold uppercase mb-1">Estimasi Finish</div>
+                        <div class="text-2xl font-bold text-white truncate" id="resFinishDate">-</div>
+                        <div class="text-blue-400 text-sm font-medium" id="resFinishDay">-</div>
                     </div>
-                    <div>
-                        <p class="text-sm text-gray-400 font-medium">Estimasi Finish</p>
-                        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1" id="resFinishDate">-</h2>
-                        <p class="text-blue-400 text-sm mt-1 font-semibold" id="resFinishDay">-</p>
-                    </div>
-                    <div class="mt-4">
-                        <div class="w-full bg-gray-700 rounded-full h-1.5">
-                            <div id="progressBar" class="bg-blue-500 h-1.5 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                    
+                    <div class="glass-panel rounded-2xl p-5 border-l-4 border-yellow-500 relative overflow-hidden">
+                        <div class="text-xs text-gray-400 font-bold uppercase mb-1">Durasi Trading</div>
+                        <div class="flex items-baseline gap-2">
+                            <div class="text-3xl font-bold text-white" id="resDays">0</div>
+                            <div class="text-sm text-gray-500">Hari Bursa</div>
                         </div>
-                        <p class="text-xs text-right text-gray-400 mt-1" id="resProgressText">0%</p>
+                    </div>
+
+                    <div class="glass-panel rounded-2xl p-5 border-l-4 border-red-500 relative overflow-hidden">
+                        <div class="text-xs text-gray-400 font-bold uppercase mb-1">Total Uang Ditarik (WD)</div>
+                        <div class="text-2xl font-bold text-red-400 truncate" id="resTotalWD">Rp 0</div>
+                        <div class="text-gray-500 text-xs mt-1">Masuk ke Rekening Pribadi</div>
                     </div>
                 </div>
 
-                <div class="glass-panel rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden group">
-                     <div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition">
-                        <i class="fa-solid fa-hourglass-half text-6xl text-yellow-500"></i>
-                    </div>
-                    <p class="text-sm text-gray-400 font-medium">Durasi Trading</p>
-                    <div>
-                        <h2 class="text-4xl font-bold text-white" id="resDays">0</h2>
-                        <p class="text-gray-400 text-sm">Hari Bursa Aktif</p>
-                    </div>
-                </div>
-
-                <div class="glass-panel rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden group">
-                     <div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition">
-                        <i class="fa-solid fa-money-bill-wave text-6xl text-green-500"></i>
-                    </div>
-                    <p class="text-sm text-gray-400 font-medium">Total Profit Bersih</p>
-                    <div>
-                        <h2 class="text-2xl font-bold text-green-400" id="resProfit">Rp 0</h2>
-                        <p class="text-gray-400 text-xs mt-1">Akumulasi Gain + WD</p>
-                    </div>
-                </div>
-
-                <div class="md:col-span-3 glass-panel rounded-2xl p-4 h-64 sm:h-80">
+                <div class="glass-panel rounded-2xl p-5 h-[350px]">
                     <canvas id="growthChart"></canvas>
                 </div>
             </div>
         </div>
 
-        <div class="glass-panel rounded-2xl overflow-hidden shadow-2xl">
-            <div class="p-6 border-b border-gray-700 flex justify-between items-center">
-                <h3 class="text-lg font-semibold text-white">
-                    <i class="fa-solid fa-list-ul text-blue-500 mr-2"></i> Roadmap Harian (Day-by-Day)
-                </h3>
-                <span class="text-xs text-gray-400 bg-gray-800 px-3 py-1 rounded-full border border-gray-700">
-                    <i class="fa-solid fa-check-circle mr-1"></i> Full Detail
-                </span>
+        <div class="glass-panel rounded-2xl overflow-hidden shadow-2xl border border-gray-700">
+            <div class="p-5 border-b border-gray-700 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gray-800/50">
+                <div>
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-money-bill-transfer text-green-500"></i> Laporan Arus Kas Harian
+                    </h3>
+                    <p class="text-xs text-gray-400 mt-1">Detail pergerakan saldo, profit, dan penarikan dana.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-bold uppercase bg-gray-900 text-gray-500 px-3 py-1.5 rounded-lg border border-gray-700">
+                        <i class="fa-solid fa-calendar-check mr-1"></i> Auto-Skip Libur
+                    </span>
+                    <span class="text-[10px] font-bold uppercase bg-gray-900 text-gray-500 px-3 py-1.5 rounded-lg border border-gray-700">
+                        <i class="fa-solid fa-filter-circle-dollar mr-1"></i> Auto-WD
+                    </span>
+                </div>
             </div>
-            <div class="overflow-x-auto max-h-[800px] overflow-y-auto"> <table class="w-full text-left border-collapse relative">
-                    <thead class="sticky top-0 z-10">
-                        <tr class="bg-gray-800 text-gray-400 text-xs uppercase tracking-wider shadow-md">
-                            <th class="px-6 py-4 font-semibold bg-gray-900">Hari Ke</th>
-                            <th class="px-6 py-4 font-semibold bg-gray-900">Tanggal</th>
-                            <th class="px-6 py-4 font-semibold text-right bg-gray-900">Target Saldo</th>
-                            <th class="px-6 py-4 font-semibold text-right bg-gray-900">Profit Harian</th>
-                            <th class="px-6 py-4 font-semibold text-center bg-gray-900">Status</th>
+            
+            <div class="overflow-x-auto max-h-[800px] overflow-y-auto custom-scrollbar">
+                <table class="w-full text-left border-collapse relative">
+                    <thead class="sticky top-0 z-20 bg-gray-900 shadow-lg">
+                        <tr class="text-gray-400 text-xs uppercase tracking-wider">
+                            <th class="px-6 py-4 font-bold border-b border-gray-700">Hari</th>
+                            <th class="px-6 py-4 font-bold border-b border-gray-700">Tanggal</th>
+                            <th class="px-6 py-4 font-bold border-b border-gray-700 text-right text-green-500">Profit (+Rp)</th>
+                            <th class="px-6 py-4 font-bold border-b border-gray-700 text-right text-red-500">Withdrawal (-Rp)</th>
+                            <th class="px-6 py-4 font-bold border-b border-gray-700 text-right text-blue-500">Saldo Akhir (=Rp)</th>
+                            <th class="px-6 py-4 font-bold border-b border-gray-700 text-center">Status</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody" class="text-sm divide-y divide-gray-800 text-gray-300">
@@ -191,22 +199,34 @@
 
     </main>
 
-    <footer class="border-t border-gray-800 mt-auto py-6">
-        <div class="max-w-7xl mx-auto px-4 text-center text-gray-500 text-sm">
-            <p>Dibuat Khusus untuk <strong>Dhanil's Trading Journal</strong></p>
-            <p class="text-xs mt-1">Database Kalender Libur Bursa 2026</p>
+    <footer class="border-t border-gray-800 mt-auto py-8 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-500 text-sm font-medium">Dibuat Khusus untuk <strong>Dhanil's Trading Journal</strong></p>
+            <p class="text-xs text-gray-600 mt-2">Menggunakan Kalender Libur Bursa Efek Indonesia 2026</p>
         </div>
     </footer>
 
     <script>
-        // --- KONFIGURASI DAN DATA ---
+        // CONFIG
         const TARGET_AMOUNT = 200000000;
         
-        // Libur Spesifik 2026 (Format: YYYY-MM-DD)
+        // LIBUR NASIONAL & CUTI BERSAMA 2026 (Database)
+        // Format: YYYY-MM-DD
         const holidays2026 = [
-            "2025-12-31", "2026-01-01", "2026-01-16", "2026-02-16", "2026-02-17",
-            "2026-03-03", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-23", "2026-03-24",
-            "2026-03-31", "2026-04-03", "2026-05-01", "2026-05-14"
+            "2025-12-31", // Libur Bursa Akhir Tahun
+            "2026-01-01", // Tahun Baru
+            "2026-01-16", // Isra Mikraj
+            "2026-02-16", // Cuti Bersama Imlek
+            "2026-02-17", // Imlek 2577
+            "2026-03-03", // Nyepi (Estimasi) - Diabaikan krn tertutup libur panjang Maret
+            // LIBUR PANJANG MARET (Nyepi + Idul Fitri)
+            "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-23", "2026-03-24", "2026-03-25",
+            "2026-03-31", // Lebaran Extra (Safety)
+            "2026-04-03", // Wafat Isa Almasih
+            "2026-05-01", // Hari Buruh
+            "2026-05-14", // Kenaikan Isa Almasih
+            "2026-05-25", // Cuti Waisak (Estimasi)
+            "2026-06-01"  // Pancasila
         ];
 
         let chartInstance = null;
@@ -215,148 +235,158 @@
         const formatIDR = (num) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
         const formatDate = (date) => date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
         
+        // Fungsi Cek Hari Trading (Senin-Jumat + Skip Libur)
         function isTradingDay(date) {
             const day = date.getDay();
             if (day === 0 || day === 6) return false; // Weekend
             
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const d = String(date.getDate()).padStart(2, '0');
-            const dateStr = `${year}-${month}-${d}`;
+            // Konversi date ke YYYY-MM-DD Local Time
+            const offset = date.getTimezoneOffset();
+            const localDate = new Date(date.getTime() - (offset*60*1000));
+            const dateStr = localDate.toISOString().split('T')[0];
             
             if (holidays2026.includes(dateStr)) return false;
             return true;
         }
 
+        // Fungsi Cari Hari Trading Berikutnya (Look Ahead)
+        function getNextTradingDay(fromDate) {
+            let nextDate = new Date(fromDate);
+            nextDate.setDate(nextDate.getDate() + 1);
+            while (!isTradingDay(nextDate)) {
+                nextDate.setDate(nextDate.getDate() + 1);
+            }
+            return nextDate;
+        }
+
         // --- CORE CALCULATION ---
         function calculate() {
-            // Get Inputs
+            // 1. Ambil Input
             let balance = parseFloat(document.getElementById('inputBalance').value) || 0;
             const dailyReturn = (parseFloat(document.getElementById('inputReturn').value) || 0) / 100;
             const monthlyWD = (parseFloat(document.getElementById('inputWD').value) || 0) * 1000000;
-            
-            // Get Start Date from Input
             const startDateInput = document.getElementById('inputStartDate').value;
+
+            // 2. Setup Tanggal Mulai
             let currentDate = new Date(startDateInput);
-
-            // Validasi: Jika user tidak isi tanggal, pakai besok
             if (isNaN(currentDate.getTime())) {
-                currentDate = new Date();
-                currentDate.setDate(currentDate.getDate() + 1);
+                currentDate = new Date(); // Default hari ini
+                currentDate.setDate(currentDate.getDate() + 1); // Start besok
             }
-            
-            // Save to LocalStorage
-            localStorage.setItem('dhanil_balance', balance);
-            localStorage.setItem('dhanil_return', document.getElementById('inputReturn').value);
-            localStorage.setItem('dhanil_wd', document.getElementById('inputWD').value);
-            localStorage.setItem('dhanil_start_date', startDateInput);
-
-            // Init Variables
-            let daysCount = 0;
-            let historyData = [];
-            let chartLabels = [];
-            let chartData = [];
-            let initialBalance = balance;
-            
-            const tableBody = document.getElementById('tableBody');
-            let tableHTML = ""; // Gunakan string builder untuk performa
-            
-            // Loop Logic
-            let safetyBreak = 0;
-            
-            // Jika tanggal mulai yang dipilih adalah hari libur, geser ke hari kerja pertama
+            // Geser ke hari trading valid pertama jika start date adalah libur
             while (!isTradingDay(currentDate)) {
                  currentDate.setDate(currentDate.getDate() + 1);
             }
 
-            while (balance < TARGET_AMOUNT && safetyBreak < 500) { 
-                
-                daysCount++;
-                let prevBalance = balance;
-                balance = balance * (1 + dailyReturn);
-                let profit = balance - prevBalance;
+            // 3. Simpan Preference User
+            localStorage.setItem('d_balance', balance);
+            localStorage.setItem('d_return', document.getElementById('inputReturn').value);
+            localStorage.setItem('d_wd', document.getElementById('inputWD').value);
+            localStorage.setItem('d_start', startDateInput);
 
-                // Logika WD Akhir Bulan
-                let isWDMoment = false;
-                let nextDay = new Date(currentDate);
-                nextDay.setDate(nextDay.getDate() + 1);
+            // 4. Init Variabel Loop
+            let daysCount = 0;
+            let totalWD = 0;
+            let chartLabels = [];
+            let chartData = [];
+            let tableHTML = "";
+            let safetyBreak = 0;
+
+            const tableBody = document.getElementById('tableBody');
+            
+            // LOOP UTAMA (Per Hari)
+            while (balance < TARGET_AMOUNT && safetyBreak < 700) { // Max 700 hari (2 tahun) safety
+                daysCount++;
+
+                // A. Hitung Profit Harian
+                let prevBalance = balance;
+                let profit = balance * dailyReturn;
+                let balanceAfterProfit = prevBalance + profit;
+
+                // B. Cek Logic Withdrawal (Apakah besok sudah ganti bulan?)
+                let nextTradingDay = getNextTradingDay(currentDate);
+                let isLastDayOfMonth = nextTradingDay.getMonth() !== currentDate.getMonth();
                 
-                // Cek ganti bulan (Cek hari bursa berikutnya, jika bulan beda, berarti ini hari terakhir bulan ini)
-                if (nextDay.getMonth() !== currentDate.getMonth()) {
-                     balance -= monthlyWD;
-                     isWDMoment = true;
+                let wdAmount = 0;
+                let isWDMoment = false;
+
+                if (isLastDayOfMonth && monthlyWD > 0) {
+                    wdAmount = monthlyWD;
+                    isWDMoment = true;
+                    totalWD += wdAmount;
                 }
 
-                // Render Table Row (TANPA SKIP - MENAMPILKAN SEMUA HARI)
+                // C. Hitung Saldo Akhir Hari Ini
+                balance = balanceAfterProfit - wdAmount;
+
+                // D. Generate Tampilan Tabel
                 const dateString = formatDate(currentDate);
                 const dayName = currentDate.toLocaleDateString('id-ID', { weekday: 'long' });
 
-                let statusBadge = '<span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">On Track</span>';
-                let rowClass = "hover:bg-gray-800/50 transition";
+                // Styling Baris
+                let rowClass = "hover:bg-gray-800/40 transition border-b border-gray-800";
+                let statusBadge = '<span class="text-[10px] font-bold bg-gray-800 text-gray-400 px-2 py-1 rounded border border-gray-700">ON TRACK</span>';
+                let wdText = "-";
+                let wdClass = "text-gray-600";
                 
                 if (isWDMoment) {
-                    statusBadge = '<span class="text-xs bg-red-900 text-red-200 px-2 py-1 rounded border border-red-700">Withdrawal</span>';
-                    rowClass = "bg-red-900/10 hover:bg-red-900/20";
+                    rowClass = "bg-red-900/10 hover:bg-red-900/20 border-b border-red-900/30";
+                    statusBadge = '<span class="text-[10px] font-bold bg-red-900/40 text-red-200 px-2 py-1 rounded border border-red-800">WITHDRAWAL</span>';
+                    wdText = `-${formatIDR(wdAmount)}`;
+                    wdClass = "text-red-400 font-bold";
                 }
+                
                 if (balance >= TARGET_AMOUNT) {
-                    statusBadge = '<span class="text-xs bg-green-900 text-green-200 px-2 py-1 rounded border border-green-700">TARGET!</span>';
-                    rowClass = "bg-green-900/20 font-bold";
+                    rowClass = "bg-green-900/20 hover:bg-green-900/30 border-b border-green-900/30";
+                    statusBadge = '<span class="text-[10px] font-bold bg-green-600 text-white px-2 py-1 rounded shadow-lg shadow-green-900/50">GOAL REACHED!</span>';
                 }
 
                 tableHTML += `
                     <tr class="${rowClass}">
-                        <td class="px-6 py-4 font-mono text-gray-400">${daysCount}</td>
+                        <td class="px-6 py-4 font-mono text-gray-400 font-bold">${daysCount}</td>
                         <td class="px-6 py-4">
-                            <div class="text-white font-medium">${dateString}</div>
-                            <div class="text-xs text-gray-500">${dayName}</div>
+                            <div class="text-white font-bold text-sm">${dateString}</div>
+                            <div class="text-xs text-gray-500 font-medium">${dayName}</div>
                         </td>
-                        <td class="px-6 py-4 text-right font-mono text-white">${formatIDR(balance)}</td>
-                        <td class="px-6 py-4 text-right font-mono text-green-400">+${formatIDR(profit)}</td>
+                        <td class="px-6 py-4 text-right font-mono text-green-400 font-medium">+${formatIDR(profit)}</td>
+                        <td class="px-6 py-4 text-right font-mono ${wdClass}">${wdText}</td>
+                        <td class="px-6 py-4 text-right font-mono text-white font-bold text-base tracking-wide">${formatIDR(balance)}</td>
                         <td class="px-6 py-4 text-center">${statusBadge}</td>
                     </tr>
                 `;
 
-                // Chart Data
+                // E. Simpan Data Chart
                 chartLabels.push(`Hari ${daysCount}`);
                 chartData.push(balance);
 
-                // Increment Date for Next Loop
-                currentDate.setDate(currentDate.getDate() + 1);
-                // Skip Holidays inside loop (Loop tanggal kalender sampai ketemu hari bursa)
-                while (!isTradingDay(currentDate)) {
-                    currentDate.setDate(currentDate.getDate() + 1);
-                }
-
+                // F. Pindah ke Hari Berikutnya
+                currentDate = nextTradingDay; // Langsung lompat ke hari trading valid berikutnya
                 safetyBreak++;
             }
 
-            // Insert Table HTML sekaligus
+            // 5. Update DOM Sekaligus
             tableBody.innerHTML = tableHTML;
 
-            // Update Summary
+            // Summary Info
             document.getElementById('resDays').innerText = daysCount;
+            document.getElementById('resTotalWD').innerText = formatIDR(totalWD);
             
-            // Find Finish Date
+            // Hitung Tanggal Finish (Mundur 1 step karena loop sudah majuin tanggal di akhir)
+            // Sebenarnya currentDate sekarang adalah hari SETELAH target tercapai.
+            // Kita perlu cari hari trading sebelumnya.
             let finishDate = new Date(currentDate);
-            // Step back to previous valid trading day
+            // Mundur cari hari trading terakhir
             do {
                 finishDate.setDate(finishDate.getDate() - 1);
             } while (!isTradingDay(finishDate));
+            
+            // Khusus: Jika loop berhenti tepat saat target tercapai, finishDate harusnya hari terakhir di loop
+            // Logika getNextTradingDay di akhir loop sudah memajukan tanggal. Jadi mundur sekali sudah benar.
 
             document.getElementById('resFinishDate').innerText = formatDate(finishDate);
             document.getElementById('resFinishDay').innerText = finishDate.toLocaleDateString('id-ID', { weekday: 'long' });
-            
-            const totalProfit = balance - initialBalance + (Math.floor(daysCount/20) * monthlyWD);
-            document.getElementById('resProfit').innerText = formatIDR(totalProfit);
 
-            // Progress Bar
-            let inputBal = parseFloat(document.getElementById('inputBalance').value);
-            let realPercent = (inputBal / TARGET_AMOUNT) * 100;
-            if (realPercent > 100) realPercent = 100;
-            
-            document.getElementById('progressBar').style.width = `${realPercent}%`;
-            document.getElementById('resProgressText').innerText = `${realPercent.toFixed(1)}%`;
-
+            // Render Chart
             renderChart(chartLabels, chartData);
         }
 
@@ -366,7 +396,7 @@
             if (chartInstance) chartInstance.destroy();
 
             let gradient = ctx.createLinearGradient(0, 0, 0, 400);
-            gradient.addColorStop(0, 'rgba(59, 130, 246, 0.5)');
+            gradient.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
             gradient.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
 
             chartInstance = new Chart(ctx, {
@@ -374,20 +404,21 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Proyeksi Saldo',
+                        label: 'Saldo Portfolio',
                         data: data,
                         borderColor: '#3b82f6',
                         backgroundColor: gradient,
                         borderWidth: 2,
                         pointRadius: 0,
+                        pointHoverRadius: 6,
                         fill: true,
-                        tension: 0.4
+                        tension: 0.3
                     },
                     {
                         label: 'Target 200 Juta',
                         data: Array(labels.length).fill(TARGET_AMOUNT),
                         borderColor: '#10b981',
-                        borderWidth: 1,
+                        borderWidth: 2,
                         borderDash: [5, 5],
                         pointRadius: 0,
                         fill: false
@@ -396,44 +427,65 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        legend: { display: true, labels: { color: '#94a3b8' } },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                            titleColor: '#e2e8f0',
+                            bodyColor: '#e2e8f0',
+                            borderColor: '#334155',
+                            borderWidth: 1,
+                            padding: 12,
+                            displayColors: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(context.raw);
+                                }
+                            }
+                        }
+                    },
                     scales: {
                         x: { display: false },
-                        y: { grid: { color: '#334155', tickLength: 0 }, ticks: { color: '#64748b', callback: function(val) { return (val/1000000) + ' Jt'; } } }
+                        y: {
+                            grid: { color: '#334155', tickLength: 0 },
+                            ticks: { 
+                                color: '#64748b',
+                                callback: function(val) { return (val/1000000) + ' Jt'; }
+                            }
+                        }
                     }
                 }
             });
         }
 
-        // --- INITIALIZATION ---
+        // --- INIT ---
         window.onload = function() {
             // Set Header Date
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('todayDate').innerText = new Date().toLocaleDateString('id-ID', options);
 
-            // Default Start Date = Tomorrow
+            // Default Start Date = Besok
             let tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + 1);
-            // Format YYYY-MM-DD manually for local time accuracy
             const offset = tomorrow.getTimezoneOffset();
-            tomorrow = new Date(tomorrow.getTime() - (offset*60*1000));
-            const tomorrowStr = tomorrow.toISOString().split('T')[0];
+            const localTomorrow = new Date(tomorrow.getTime() - (offset*60*1000));
+            const tomorrowStr = localTomorrow.toISOString().split('T')[0];
 
-            // Load LocalStorage
-            if(localStorage.getItem('dhanil_balance')) document.getElementById('inputBalance').value = localStorage.getItem('dhanil_balance');
+            // Load Saved Data
+            if(localStorage.getItem('d_balance')) document.getElementById('inputBalance').value = localStorage.getItem('d_balance');
             else document.getElementById('inputBalance').value = "7000000"; 
             
-            if(localStorage.getItem('dhanil_return')) document.getElementById('inputReturn').value = localStorage.getItem('dhanil_return');
-            if(localStorage.getItem('dhanil_wd')) document.getElementById('inputWD').value = localStorage.getItem('dhanil_wd');
+            if(localStorage.getItem('d_return')) document.getElementById('inputReturn').value = localStorage.getItem('d_return');
+            if(localStorage.getItem('d_wd')) document.getElementById('inputWD').value = localStorage.getItem('d_wd');
             
-            // Set Start Date Input
-            if(localStorage.getItem('dhanil_start_date')) {
-                document.getElementById('inputStartDate').value = localStorage.getItem('dhanil_start_date');
-            } else {
-                document.getElementById('inputStartDate').value = tomorrowStr;
-            }
+            if(localStorage.getItem('d_start')) document.getElementById('inputStartDate').value = localStorage.getItem('d_start');
+            else document.getElementById('inputStartDate').value = tomorrowStr;
 
-            // Run
+            // Run First Calc
             calculate();
         };
     </script>
